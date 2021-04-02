@@ -4,9 +4,9 @@ const port = 8000;
 app.listen(port, () => {
   console.log('Server started on port: ' + port);
 });
-// app.get('/', (req, res) => {
-//     res.send('Authors API');
-//   });
+app.get('/', (req, res) => {
+    res.send('Authors API');
+  });
 
 // app.get('/bonjour/:name/age/:age', (req, res) => {
 //     res.send(`Bonjour ${req.params.name} ! Tu as ${req.params.age} ans.`);
