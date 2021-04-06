@@ -26,7 +26,7 @@ let reverse= ()=>{
 
     request.get("http://localhost:8000/countries", 
    
-    function(err, res,body) {
+    (err, res,body)=> {
        
         if(err){
             console.error(err);
