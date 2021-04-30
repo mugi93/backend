@@ -1,10 +1,14 @@
 const express = require('express');
 const country = require('./info');
 const infos = require("./info")
+const cors = require('cors')
+const app = express();
+app.use(cors())
 console.log(infos)
 
 
-const app = express();
+
+
 
 const port = 9001;
 
