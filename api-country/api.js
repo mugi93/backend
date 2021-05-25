@@ -19,14 +19,17 @@ app.get("/country/:name",function(req,res){
     
     const pay= req.params.name
     const infocount=[]
-   
-    for (let index=0;index<infos.length;index++){
+   const result=infos.find(elem=>{
+       return elem.name.toLocaleLowerCase===pay.toLocaleLowerCase
+
+   })
+//     for (let index=0;index<infos.length;index++){
        
-        if(pay===infos[index].name){
-          infocount.push(infos[index])
-    }
-   }
-     res.json(infocount)
+//         if(pay===infos[index].name){
+//           infocount.push(infos[index])
+//     }
+//    }
+     res.json(result)
 
 })
 
