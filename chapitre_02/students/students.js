@@ -25,6 +25,11 @@ app.post("/students/",(req,res)=>{
     
 
 })
+app.get("*", (req, res) => {
+    res.json({
+        message: "The route doesn't exist"
+    })
+})
 
 app.listen(port,  () => {
     console.log(`Serveur à l'écoute dans le port ${port}`);
