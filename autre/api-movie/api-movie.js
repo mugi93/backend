@@ -14,25 +14,25 @@ console.log(infos)
 //     response.json()
 
 // }
-    
+
 //     )
 
 
-    const port = 9001;
+const port = 9001;
 app.get("/movie", function (req, res) {
     res.json(infos)
 })
 
-app.get("/movie/:id"),function (req,res){
-    const id=parseInt(req.params.id)
-  const moviePop = infos.find(elem =>{
-      console.log(elem)
-        return elem.id===id
+app.get("/movie/:id"), function (req, res) {
+    const id = parseInt(req.params.id)
+    const moviePop = infos.find(elem => {
+        console.log(elem)
+        return elem.id === id
     })
-    if(moviePop){
+    if (moviePop) {
         res.json(moviePop)
     }
-    
+
 }
 // app.get("/movie/:week/:today"),function(req,res){
 //     const week=req.params.week

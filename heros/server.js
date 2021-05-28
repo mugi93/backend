@@ -5,7 +5,7 @@ app.use(express.json())
 app.use(cors())
 
 
-const superHeros=[{
+const superHeros = [{
     name: "Iron Man",
     power: ["money"],
     color: "red",
@@ -29,20 +29,77 @@ const superHeros=[{
     age: 30,
     image: "https://aws.vdkimg.com/film/2/5/1/1/251170_backdrop_scale_1280xauto.jpg"
 }]
+const debug = (req, res, next) => {
+    console.log("Je fais un console.log à chaque requête")
+    next()
+}
 
-const port = 9001;
+app.use(debug)
+
+const transformName = (req, res, next) => {
+
+    const lower = req.body.name.toLowerCase()
+    Object.defineProperty(req.body,"o",{get : function(){ return lower;}})
+    
+   
+
+    
+    next()
+}
 
 
 
 
+const port = 8000;
 
-app.get("/heros", ( req,res) => {
+app.get("/heroes", (req, res) => {
 
 
     res.json(superHeros)
-    
-    
+
+
 })
+
+app.get("/heroes/:name", (req, res) => {
+
+    const name = req.params.name;
+
+    const superH = superHeros.find(elem => {
+        console.log(elem.name)
+        return elem.name === name
+    })
+
+    if (superH) {
+        res.json(superH)
+    }
+})
+
+app.get("/heroes/:name/powers", (req, res) => {
+    const name = req.params.name;
+
+    const superH = superHeros.find(elem => {
+
+        return elem.name === name
+    })
+
+    if (superH) {
+        res.json(superH.power)
+    }
+})
+
+app.post("/heroes", transformName, (req, res) => {
+    const heroAdd = req.body
+
+    superHeros.push(heroAdd)
+
+    res.json({
+        superHeros,
+        message: "Ok, héros ajouté"
+    })
+})
+
+
+
 
 app.get("*", (req, res) => {
     res.json({
@@ -50,9 +107,7 @@ app.get("*", (req, res) => {
     })
 })
 
-app.use(function debug (req, res, next)  {
-    console.log("Je fais un console.log à chaque requête")
-});
+
 
 app.listen(port, () => {
     console.log(`Serveur à l'écoute dans le port ${port}`);
