@@ -38,13 +38,29 @@ app.use(debug)
 
 const transformName = (req, res, next) => {
 
-    const lower = req.body.name.toLowerCase()
-    Object.defineProperty(req.body,"o",{get : function(){ return lower;}})
-    
-   
+    const checkName = superHeros.find(elem => {
+        return elem.name === req.body.name
+    })
+    if (checkName) {
+        res.json({
+            message: "erreur ce superheros existe deja dans la liste"
+        })
+    } else {
+        const lower = req.body.name.toLowerCase()
+        req.toLower = lower
 
-    
+    }
+
+
+
+
+
     next()
+
+
+
+
+
 }
 
 
@@ -88,7 +104,10 @@ app.get("/heroes/:name/powers", (req, res) => {
 })
 
 app.post("/heroes", transformName, (req, res) => {
-    const heroAdd = req.body
+    console.log(req.toLower)
+    const heroAdd = {
+        name: req.toLower
+    }
 
     superHeros.push(heroAdd)
 
@@ -98,7 +117,21 @@ app.post("/heroes", transformName, (req, res) => {
     })
 })
 
+app.post("/heroes/:name/powers", (req, res) => {
+    const name = req.params.name;
 
+    const superH = superHeros.find(elem => {
+
+        return elem.name === name
+    })
+
+    const powerAdd = req.body.power
+
+    superH.power.push(powerAdd)
+
+    res.json(superH)
+
+})
 
 
 app.get("*", (req, res) => {
