@@ -37,6 +37,11 @@ const debug = (req, res, next) => {
 app.use(debug)
 
 const transformName = (req, res, next) => {
+    if (req.body.name===undefined){
+        res.json({
+            message:"rajouter dans le body"
+        })
+    }
 
     const checkName = superHeros.find(elem => {
         return elem.name === req.body.name
@@ -50,19 +55,24 @@ const transformName = (req, res, next) => {
         req.toLower = lower
 
     }
-
-
-
-
-
     next()
-
-
-
-
-
 }
 
+const validName =(req,res,next)=>{
+    const name= req.params.name
+    const superH = superHeros.find(elem => {
+        console.log(elem.name)
+        return elem.name.toLowerCase() === name.toLowerCase()
+    })
+
+    if (superH.name===undefined){
+        res.json({
+            message:"error"
+        })
+    }else{
+        next()
+    }
+}
 
 
 
@@ -82,7 +92,7 @@ app.get("/heroes/:name", (req, res) => {
 
     const superH = superHeros.find(elem => {
         console.log(elem.name)
-        return elem.name === name
+        return elem.name.toLowerCase() === name.toLowerCase()
     })
 
     if (superH) {
@@ -95,7 +105,7 @@ app.get("/heroes/:name/powers", (req, res) => {
 
     const superH = superHeros.find(elem => {
 
-        return elem.name === name
+        return elem.name.toLowerCase() === name.toLowerCase()
     })
 
     if (superH) {
@@ -122,7 +132,7 @@ app.post("/heroes/:name/powers", (req, res) => {
 
     const superH = superHeros.find(elem => {
 
-        return elem.name === name
+        return elem.name.toLowerCase() === name.toLowerCase()
     })
 
     const powerAdd = req.body.power
@@ -132,7 +142,56 @@ app.post("/heroes/:name/powers", (req, res) => {
     res.json(superH)
 
 })
+app.delete("/heroes/:name",validName,(req,res)=>{
+    const name = req.params.name
+    const superH = superHeros.findIndex(elem => {
 
+        return elem.name.toLowerCase() === name.toLowerCase()
+    })
+       
+    if (superH>=0){
+        const deletes = superHeros.splice(superH,1)
+        res.json({
+        message:`${name} effacé correctement`
+    })
+    }
+    
+})
+app.delete("/heroes/:name/power/:power",validName,(req,res)=>{
+    
+    const name = req.params.name
+    const power = req.params.power
+    const superH = superHeros.find(elem => {
+
+        return elem.name.toLowerCase() === name.toLowerCase()
+    })
+    if(superH){
+        const superPower=superHeros.findIndex(elem=>{
+            return elem.power===power
+        })
+        const deletes = superH.power.splice(superPower,1)
+        res.json({
+            message:` le pouvoir ${power} est effacé`
+        })
+    }
+
+
+})
+app.put("/heroes/:name",(req,res)=>{
+    const name = req.params.name
+    const repla = req.body
+    const superH = superHeros.findIndex(elem => {
+
+        return elem.name.toLowerCase() === name.toLowerCase()
+    })
+       
+    if (superH>=0){
+        const deletes = superHeros.splice(superH,1,repla)
+        res.json({
+        superHeros
+    })
+    }
+})
 
 app.get("*", (req, res) => {
     res.json({
