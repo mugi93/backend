@@ -70,7 +70,7 @@ db.students_languages.insert({student_id:6,language_id:3})
 db.students.find(ObjectId("60ba1cd5a533418bbde4a26d"))
 // 2
 db.students.find(ObjectId("60ba1d65a533418bbde4a270"))
-// 3 
+// 3 je ne sais pas lequel est le bon donc j'ai mis les 2 
 db.students.find({_id:ObjectId("60ba1d65a533418bbde4a270")},{name:"Sophie",city:"Paris",_id:0})
 db.students.find({_id:ObjectId("60ba1d65a533418bbde4a270")},{_id:0})
 //4
