@@ -53,9 +53,10 @@ const transformName = (req, res, next) => {
     } else {
         const lower = req.body.name.toLowerCase()
         req.toLower = lower
+        next()
 
     }
-    next()
+    
 }
 
 const validName =(req,res,next)=>{
@@ -65,12 +66,12 @@ const validName =(req,res,next)=>{
         return elem.name.toLowerCase() === name.toLowerCase()
     })
 
-    if (superH.name===undefined){
+    if (superH){
+        next()
+    }else{
         res.json({
             message:"error"
         })
-    }else{
-        next()
     }
 }
 
