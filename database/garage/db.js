@@ -68,3 +68,9 @@ peugeot.save((err,car)=>{
       }
 
 })
+
+Car.insertMany([
+    {brand:"Aston Martin",model:"DB9",year:"2010"},
+    {brand:"Range Rover",model:"Discovery Sport",year:"2017"}
+
+])
