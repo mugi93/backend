@@ -131,17 +131,16 @@ app.post("/heroes", async (req, res) => {
 
 
 app.post("/heroes/:name/powers",async (req,res)=>{
+    const name= req.params.name
+    const newPower = req.body.power
     try {
-        const newPower= new Hero({
-            power:req.body.power
-        })
-        await newPower.save()
-        res.json("hero ajouter:",power)
+        Hero.updateOne({name},{$push:{powers:newPower}})
+        res.json("pouvoir ajouter")
     } catch (error) {
         console.error("Error in GET /heroes", error)
 
         res.json({
-            message: "Error when finding heroes "
+            message: "Error pas ajouter pouvoir "
         })
     }
 
