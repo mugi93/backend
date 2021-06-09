@@ -109,7 +109,7 @@ Hero.insertMany([
 
 
 
-const port = 8000;
+const port = 8001;
 
 app.get("/heroes", async (req, res) => {
     try {
@@ -159,6 +159,7 @@ app.get("/heroes/:name/powers", async (req, res) => {
     try {
         const names = req.params.name
         const powers = await Hero.findOne({ name: names })
+        console.log(powers)
         res.json(powers.power)
     } catch (error) {
         console.error("Error in GET /heroes", error)
@@ -182,7 +183,7 @@ app.get("/heroes/:name/powers", async (req, res) => {
 //     res.json(superH.power)
 // }
 
-app.post("/heroes", transformName, async (req, res) => {
+app.post("/heroes", async (req, res) => {
     // console.log(req.toLower)
     // const heroAdd = {
     //     name: req.toLower
@@ -192,10 +193,8 @@ app.post("/heroes", transformName, async (req, res) => {
         name:req.body.name
     })
     newHero.save()
-    const powers = await Hero.find()
-    res.json({
-        powers
-    })
+    // const powers = await Hero.find()
+    res.json(Car )
 })
 
 
