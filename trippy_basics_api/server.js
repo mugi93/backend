@@ -1,9 +1,9 @@
 const mongoose = require("mongoose")
 const express = require("express")
 const cors = require("cors")
-const Hotel = require("./model/hotel")
-const Restaurant = require("./model/restaurant")
-const e = require("express")
+const Hotel = require("../model/hotel")
+const Restaurant = require("../model/restaurant")
+const { MongoClient, ObjectID } = require('mongodb')
 
 mongoose.connect("mongodb://localhost:27017/trippy", (err) => {
     if (err) {
@@ -47,9 +47,9 @@ app.get("hotels/:id", async (req, res) => {
     try {
         const id = req.params.id
         console.log(id)
-        const hotel = await Hotel.findById( id)
+        const hotel = await Hotel.find( `Objectid(${id})`)
         if (hotel) {
-            res.json({ hotel })
+            res.json( hotel)
         } else {
             res.json({
                 message: "Hotel not found"
