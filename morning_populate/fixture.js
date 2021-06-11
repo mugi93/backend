@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const Address = require("../model/address")
-const Student = require("../model/student")
+const modelAddress = require("../model/address")
+const modelStudent = require("../model/student")
 
 
 mongoose.connect("mongodb://localhost:27017/mongoose_populate", (err) => {
@@ -13,10 +13,10 @@ mongoose.connect("mongodb://localhost:27017/mongoose_populate", (err) => {
 
 const addStudent = async () => {
     try {
-        await Address.deleteMany({})
-        await Student.deleteMany({})
+        await modelAddress.deleteMany({})
+        await modelStudent.deleteMany({})
 
-        const address = await Address.insertMany([
+        const address = await modelAddress.insertMany([
             {
                 streetName: "byebye",
                 streetNumber: "5",
@@ -36,9 +36,9 @@ const addStudent = async () => {
                 city: "Manchester",
             }
         ])
-        console.log(addStudent)
+        console.log(address)
 
-        await Student.insertMany([
+        await modelStudent.insertMany([
             {
                 firstName: "Mugilan",
                 surname: "Gnanasegaram",
@@ -59,8 +59,21 @@ const addStudent = async () => {
 
             }
         ])
-
+        console.log("base de donnes creer")
+        const adressId=  await modelAddress.find({_id})
+        console.log(adressId)
     }catch (err) {
         console.error(err)
     }
 }
+
+
+const students= async ()=>{
+    try{
+        const studentInfo= await modelStudent.find( {}).populate("adress")
+        console.log("student",studentInfo)
+    }catch (err) {
+        console.error(err)
+    }
+}
+// addStudent()

@@ -4,10 +4,10 @@ const addressSchema = new mongoose.Schema({
     streetName: String,
     streetNumber: String,
     postCode: String,
-    city:String,
+    city: String,
     created: { type: Date, default: Date.now }
 })
 
-const Address = mongoose.model("Address", addressSchema)
+const modelAddress = mongoose.model("modelAddress", addressSchema)
 
-module.exports = Address
+module.exports = modelAddress
