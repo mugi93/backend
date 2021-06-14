@@ -43,11 +43,11 @@ app.get("/hotels", async (req, res) => {
 
 })
 
-app.get("hotels/:id", async (req, res) => {
+app.get("/hotels/:id", async (req, res) => {
     try {
         const id = req.params.id
         console.log(id)
-        const hotel = await Hotel.find( `Objectid(${id})`)
+        const hotel = await Hotel.findById(id )
         if (hotel) {
             res.json( hotel)
         } else {
