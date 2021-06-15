@@ -66,7 +66,19 @@ app.get("/hotels/:id", async (req, res) => {
 
 })
 
+app.post("/hotels",async (req,res)=>{
+    try {
+        const add = req.body
 
+ const student = await Hotel.create(add)
+
+    }catch (err) {
+        console.error(err)
+
+        res.status(500).json({ errorMessage: "There was a problem :(" })
+
+    }
+})
 
 
 
