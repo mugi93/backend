@@ -3,7 +3,8 @@ const mongoose = require("mongoose")
 const expressValidator = require("express-validator");
 const { body, validationResult } = require('express-validator');
 const cors = require("cors")
-const Forms = require("../../model/forms")
+const { routeVali } = require("./route/routeVali")
+
 
 mongoose.connect("mongodb://localhost:27017/forms", (err) => {
     if (err) {
@@ -17,6 +18,18 @@ mongoose.connect("mongodb://localhost:27017/forms", (err) => {
 const app = express();
 
 app.use(express.json());
+
+app.use(cors())
+
+app.use(express.json())
+
+app.get("/user",routeVali)
+
+
+
+
+
+
 
 app.post('/signup',
     expressValidator.body("username").isLength(min = 4, max = 30),

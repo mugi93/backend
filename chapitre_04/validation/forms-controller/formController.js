@@ -15,3 +15,7 @@ const User = async (req, res) => {
     }
 
 }
+module.exports={
+    User
+
+}
