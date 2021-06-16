@@ -1,7 +1,17 @@
 const express = require("express");
+const mongoose = require("mongoose")
 const expressValidator = require("express-validator");
-const passwordValidator = require('password-validator');
 const { body, validationResult } = require('express-validator');
+const cors = require("cors")
+const Forms = require("../../model/forms")
+
+mongoose.connect("mongodb://localhost:27017/forms", (err) => {
+    if (err) {
+        console.error(err);
+    } else {
+        console.log("I'm connected to the database")
+    }
+})
 
 
 const app = express();
@@ -10,32 +20,19 @@ app.use(express.json());
 
 app.post('/signup',
     expressValidator.body("username").isLength(min = 4, max = 30),
-    // custom((value) => {
-    //     console.log("value:", value)
-    //     if (value.lenght > 4) {
-    //         return true
-    //     } else {
-    //         return false
-    //     }
-
+    
     expressValidator.body("email").isEmail(),
     
-    expressValidator.body("age").is().digits()
+    expressValidator.body("age").isInt().isLength(min=1,max=2 ),
 
-    //   expressValidator.body("password").custom((value) => {
-    //     var schema = new passwordValidator();
-    //     schema
-    //       .is().min(8) // Minimum length 8
-    //       .is().max(100) // Maximum length 100
-    //       .has().uppercase() // Must have uppercase letters
-    //       .has().lowercase() // Must have lowercase letters
-    //       .has().digits(2) // Must have at least 2 digits
-    //       .has().not().spaces() // Should not have spaces
+    expressValidator.body("city").isIn(['Tokyo', 'Paris', 'Los Angeles'])
+    
 
-    //     return schema.validate(value);
-    //   }),
-    , (req, res) => {
-        const errors = validationResult(req);
+
+    
+    , async (req, res) => {
+       try{
+           const errors = validationResult(req);
         if (errors.isEmpty() === false) {
             res.json({
                 errors: errors.array()
@@ -47,6 +44,13 @@ app.post('/signup',
                 message: 'test ok'
             });
         }
+       }catch(err) {
+        console.error(err)
+
+        res.status(400).json({ errorMessage: "There was a problem :(" })
+
+    }
+        
 
        
     });
