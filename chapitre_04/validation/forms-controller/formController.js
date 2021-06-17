@@ -82,10 +82,25 @@ const getId= async(req,res)=>{
     }
 }
 
+const getEmail = async(req,res)=>{
+    try {
+        const email = req.params.email
+        const userEmail=await Forms.findOne({
+            email :email
+        })
+        res.json(userEmail)
+        
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: "probleme" })
+    }
+}
+
 module.exports = {
         User,
         addUser,
         username,
-        getId
+        getId,
+        getEmail
 
     }

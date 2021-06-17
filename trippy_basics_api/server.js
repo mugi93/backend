@@ -1,10 +1,8 @@
-const mongoose = require("mongoose")
 const express = require("express")
+const mongoose = require("mongoose")
+const hotelRoutes = require("./routes/hotelRoute")
+const restaurantRoutes = require("./routes/restauRoute")
 const cors = require("cors")
-const Hotel = require("../model/hotel")
-const Restaurant = require("../model/restaurant")
-const { MongoClient, ObjectID } = require('mongodb')
-
 mongoose.connect("mongodb://localhost:27017/trippy", (err) => {
     if (err) {
         console.error(err);
@@ -29,65 +27,11 @@ app.use(express.json())
 app.use(debug)
 
 
-app.get("/hotels", async (req, res) => {
+app.use(express.json())
 
-    try {
-        const hotels = await Hotel.find()
-
-        res.json(hotels)
-    } catch (err) {
-        console.error(err)
-
-        res.status(500).json({ errorMessage: "There was a problem :(" })
-    }
-
-})
-
-app.get("/hotels/:id", async (req, res) => {
-    try {
-        const id = req.params.id
-        console.log(id)
-        const hotel = await Hotel.findById(id )
-        if (hotel) {
-            res.json( hotel)
-        } else {
-            res.json({
-                message: "Hotel not found"
-            })
-        }
-
-
-    } catch (err) {
-        console.error(err)
-
-        res.status(500).json({ errorMessage: "There was a problem :(" })
-
-    }
-
-})
-
-app.post("/hotels",async (req,res)=>{
-    try {
-        const add = req.body
-
- const student = await Hotel.create(add)
-
-    }catch (err) {
-        console.error(err)
-
-        res.status(500).json({ errorMessage: "There was a problem :(" })
-
-    }
-})
-
-
-
-app.get("*", (req, res) => {
-    res.json({
-        errorMessage: "The route was not found"
-    }, 404)
-})
+app.use("/hotels", hotelRoutes)
+app.use("/restaurants", restaurantRoutes)
 
 app.listen(port, () => {
-    console.log("Server is listening at port ", port);
+    console.log("The server is waiting for requests")
 })
