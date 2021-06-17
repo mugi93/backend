@@ -1,10 +1,15 @@
 const express = require("express")
 const router = express.Router()
-const {User} = require("../forms-controller/formController")
+const { User , addUser } = require("../forms-controller/formController")
+const userValidation = require("../validator")
 
 
 
-router.get("/",User)
+router.get("/", User)
+
+router.post("/", userValidation,addUser)
+
+router.get("/:username")
 
 
 router.all("*", (req, res) => {
@@ -14,6 +19,4 @@ router.all("*", (req, res) => {
 })
 
 
-module.exports = {
-    routeVali: router
-}
+module.exports = router
