@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const { User , addUser } = require("../forms-controller/formController")
+const { User , addUser, username, getId } = require("../forms-controller/formController")
 const userValidation = require("../validator")
 
 
@@ -9,7 +9,9 @@ router.get("/", User)
 
 router.post("/", userValidation,addUser)
 
-router.get("/:username")
+router.get("/:username",username)
+
+router.get("/id/:id",getId)
 
 
 router.all("*", (req, res) => {
