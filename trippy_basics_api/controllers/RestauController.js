@@ -40,6 +40,8 @@ const addRestaurant = async (req, res) => {
     }
 }
 
+
+
 module.exports = {
     getRestaurants,
     getRestaurant,

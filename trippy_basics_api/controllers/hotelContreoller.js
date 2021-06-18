@@ -40,8 +40,23 @@ const addHotel = async (req, res) => {
     }
 }
 
+const newNamehotel =async(req,res)=>{
+    try {
+        const id = req.params.id
+        const newName= req.query.name
+        console.log(newName)
+        const changeName= await hotelModel.updateOne({_id:id},{name:newName})
+        res.json(changeName)
+
+        
+    } catch (error) {
+        res.status(500).json({ message: "There was a problem", error })
+    }
+}
+
 module.exports = {
     getHotels,
     getHotel,
-    addHotel
+    addHotel,
+    newNamehotel
 }
