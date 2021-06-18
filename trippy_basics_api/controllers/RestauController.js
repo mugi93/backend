@@ -42,8 +42,39 @@ const addRestaurant = async (req, res) => {
 
 
 
+const newNameRestaurant = async (req, res) => {
+    try {
+        const id = req.params.id
+        const newName = req.query.name
+        console.log(newName)
+        const changeName = await restaurantModel.updateOne({ _id: id }, { name: newName })
+        res.json(changeName)
+
+
+    } catch (error) {
+        res.status(500).json({ message: "There was a problem", error })
+    }
+}
+
+const deleteRestaurant = async (req, res) => {
+    try {
+        const id= req.params.id
+        const deleteR = await restaurantModel.deleteOne({_id:id})
+        res.json({
+            message:"hotel effacé"
+        })
+
+    } catch (error) {
+        res.status(500).json({ message: "There was a problem", error })
+    }
+
+}
+
+
 module.exports = {
     getRestaurants,
     getRestaurant,
-    addRestaurant
+    addRestaurant,
+    deleteRestaurant,
+    newNameRestaurant
 }

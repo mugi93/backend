@@ -30,7 +30,14 @@ app.use(debug)
 app.use(express.json())
 
 app.use("/hotels", hotelRoutes)
+
 app.use("/restaurants", restaurantRoutes)
+
+app.get("*", (req, res) => {
+    res.json({
+        errorMessage: "The route was not found"
+    }, 404)
+})
 
 app.listen(port, () => {
     console.log("The server is waiting for requests")
