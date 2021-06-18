@@ -68,10 +68,25 @@ const deleteHotel = async (req, res) => {
 
 }
 
+const getlimit = async (req, res) => {
+    try {
+        const params = req.query.limit
+        console.log("params",params)
+        const deleteH = await hotelModel.find().splice(0,params)
+        
+        res.json(deleteH)
+
+    } catch (error) {
+        res.status(500).json({ message: "There was a problem", error })
+    }
+
+}
+
 module.exports = {
     getHotels,
     getHotel,
     addHotel,
     newNamehotel,
-    deleteHotel
+    deleteHotel,
+    getlimit
 }
