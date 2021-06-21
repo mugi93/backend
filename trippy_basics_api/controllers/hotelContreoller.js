@@ -9,16 +9,16 @@ const getHotels = async (req, res) => {
         console.log("params limit", limit)
         console.log("params page", page)
         if (typeof limit !== 'undefined' && typeof page !== 'undefined') {
-            const hotelskpi = await hotelModel.find().lean().skip(3)
+            const hotelskpi = await hotelModel.find().lean().skip(3).limit(3)
             res.json(hotelskpi)
 
-        } else if (typeof params !== 'undefined') {
+        } else if (typeof limit !== 'undefined') {
             const hotels = await hotelModel.find().lean().limit(3)
             // console.log(hotels)
             res.json(hotels)
 
         } else {
-            const hotel = await hotelModel.find().lean()
+            const hotel = await hotelModel.find().lean().populate("room")
             // console.log(hotel)
             res.json(hotel)
         }

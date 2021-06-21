@@ -3,10 +3,26 @@ const expressValidator = require("express-validator");
 
 const getRestaurants = async (req, res) => {
     try {
-        const restaurants = await restaurantModel.find().lean()
+        const limit = req.query.limit
+        const page = req.query.page
 
-        res.json(restaurants)
+        console.log("params limit", limit)
+        console.log("params page", page)
+        if (typeof limit !== 'undefined' && typeof page !== 'undefined') {
+            const restaurantsSkip = await restaurantModel.find().lean().lean().skip(3).limit(3)
+            res.json(restaurantsSkip)
 
+        } else if (typeof limit !== 'undefined') {
+            const restaurantsLimit = await restaurantModel.find().lean().limit(3)
+       
+            res.json(restaurantsLimit)
+
+        } else {
+            const restaurants = await restaurantModel.find().lean()
+            
+            res.json(restaurants)
+        }
+    
     } catch (error) {
         res.status(500).json({ message: "There was a problem", error })
     }

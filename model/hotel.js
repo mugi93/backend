@@ -4,11 +4,15 @@ const hotelSchema = new mongoose.Schema({
     name: String,
     address: String,
     city: String,
-    country:String,
-    stars: {type:Number,min:1,max:5},
-    hasSpa:Boolean,
-    hasPool:Boolean,
-    PriceCategory:{type:Number,min:1,max:3},
+    country: String,
+    stars: { type: Number, min: 1, max: 5 },
+    hasSpa: Boolean,
+    hasPool: Boolean,
+    PriceCategory: { type: Number, min: 1, max: 3 },
+    room: [{
+        type: mongoose.Types.ObjectId,
+        ref: "room"
+    }],
     created: { type: Date, default: Date.now }
 })
 
