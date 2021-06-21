@@ -3,7 +3,7 @@ const router = express.Router()
 const { getHotels, getHotel, addHotel, newNamehotel,deleteHotel, getlimit } = require("../controllers/hotelContreoller")
 const { validationHotels } = require("../middlewares/validation")
 
-router.get("/", getHotels,getlimit)
+router.get("/", getHotels)
 
 router.get("/:id", getHotel)
 

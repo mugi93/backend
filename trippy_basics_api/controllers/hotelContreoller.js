@@ -3,9 +3,23 @@ const expressValidator = require("express-validator");
 
 const getHotels = async (req, res) => {
     try {
-        const hotels = await hotelModel.find().lean()
+        const params = req.query.limit
+        console.log("params", params)
+        if (typeof params !== 'undefined') {
+            const hotels = await hotelModel.find().lean().limit(3)
+            console.log(hotels)
+            res.json(hotels)
 
-        res.json(hotels)
+        } else {
+            const hotel = await hotelModel.find().lean()
+            console.log(hotel)
+            res.json(hotel)
+        }
+
+
+        // const hotel = await hotelModel.find().lean() 
+        // res.json(hotel)
+
     } catch (error) {
 
         res.status(500).json({ message: "There was a problem", error })
@@ -56,10 +70,10 @@ const newNamehotel = async (req, res) => {
 
 const deleteHotel = async (req, res) => {
     try {
-        const id= req.params.id
-        const deleteH = await hotelModel.deleteOne({_id:id})
+        const id = req.params.id
+        const deleteH = await hotelModel.deleteOne({ _id: id })
         res.json({
-            message:"hotel effacé"
+            message: "hotel effacé"
         })
 
     } catch (error) {
@@ -68,19 +82,9 @@ const deleteHotel = async (req, res) => {
 
 }
 
-const getlimit = async (req, res) => {
-    try {
-        const params = req.query.limit
-        console.log("params",params)
-        const deleteH = await hotelModel.find().splice(0,params)
-        
-        res.json(deleteH)
 
-    } catch (error) {
-        res.status(500).json({ message: "There was a problem", error })
-    }
 
-}
+
 
 module.exports = {
     getHotels,
@@ -88,5 +92,5 @@ module.exports = {
     addHotel,
     newNamehotel,
     deleteHotel,
-    getlimit
+
 }
