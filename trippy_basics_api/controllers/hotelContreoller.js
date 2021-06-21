@@ -3,22 +3,24 @@ const expressValidator = require("express-validator");
 
 const getHotels = async (req, res) => {
     try {
+
+
         const limit = req.query.limit
         const page = req.query.page
 
         console.log("params limit", limit)
         console.log("params page", page)
         if (typeof limit !== 'undefined' && typeof page !== 'undefined') {
-            const hotelskpi = await hotelModel.find().lean().skip(3).limit(3)
+            const hotelskpi = await hotelModel.find().populate("rooms").lean().skip(3).limit(3)
             res.json(hotelskpi)
 
         } else if (typeof limit !== 'undefined') {
-            const hotels = await hotelModel.find().lean().limit(3)
+            const hotels = await hotelModel.find().populate("rooms").lean().limit(3)
             // console.log(hotels)
             res.json(hotels)
 
         } else {
-            const hotel = await hotelModel.find().lean().populate("room")
+            const hotel = await hotelModel.find().populate("rooms").lean()
             // console.log(hotel)
             res.json(hotel)
         }
@@ -29,6 +31,7 @@ const getHotels = async (req, res) => {
         // res.json(hotel)
 
     } catch (error) {
+        console.log(error)
 
         res.status(500).json({ message: "There was a problem", error })
     }
@@ -37,10 +40,11 @@ const getHotels = async (req, res) => {
 const getHotel = async (req, res) => {
     try {
         const idHotel = req.params.id
-        const hotel = await hotelModel.findById(idHotel).lean()
+        const hotel = await hotelModel.findById(idHotel).populate('rooms').lean()
 
         res.json(hotel)
     } catch (error) {
+        console.log (error)
 
         res.status(500).json({ message: "There was a problem", error })
     }
