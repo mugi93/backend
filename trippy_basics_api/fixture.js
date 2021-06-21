@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Hotel = require("../model/hotel");
 const Restaurant = require("../model/restaurant")
 const Room = require("../model/room")
+const Table=require("../model/table")
 
 
 
@@ -38,7 +39,7 @@ mongoose.connect("mongodb://localhost:27017/trippy", (err) => {
 
 const addHotel = async () => {
     try {
-      const rooms=  await Room.insertMany([
+        const rooms = await Room.insertMany([
             {
                 people: 5,
                 price: 50,
@@ -53,7 +54,8 @@ const addHotel = async () => {
                 country: "France",
             }
         ])
-        await Hotel.insertMany([
+
+        const hotel = await Hotel.insertMany([
             {
                 name: "One",
                 address: "24 rue piece ",
@@ -63,10 +65,11 @@ const addHotel = async () => {
                 hasSpa: true,
                 hasPool: true,
                 PriceCategory: 1,
-                rooms:[rooms[0]._id,rooms[1]._id]
+                rooms: [rooms[0], rooms[1]]
             }
 
         ])
+
     } catch (err) {
         console.error(err)
     }
@@ -74,6 +77,18 @@ const addHotel = async () => {
 
 const addResto = async () => {
     try {
+        const table = await Table.insertMany([
+            {
+                seat: 6,
+                isVip: true
+            },
+            {
+                seat:3,
+                isVip: false
+
+            }
+        ])
+
         await Restaurant.insertMany([
             {
                 name: "Piece",
@@ -83,7 +98,8 @@ const addResto = async () => {
                 stars: 5,
                 cuisine: "BBQ",
                 PriceCategory: 1,
-                
+                tables:[table[0],table[1]]
+
             }
 
         ])
@@ -91,6 +107,6 @@ const addResto = async () => {
         console.error(err)
     }
 }
-addHotel()
+// addHotel()
 addResto()
 // room()

@@ -1,5 +1,6 @@
 const restaurantModel = require("../../model/restaurant")
 const expressValidator = require("express-validator");
+const Table=require("../../model/table")
 
 const getRestaurants = async (req, res) => {
     try {
@@ -9,16 +10,16 @@ const getRestaurants = async (req, res) => {
         console.log("params limit", limit)
         console.log("params page", page)
         if (typeof limit !== 'undefined' && typeof page !== 'undefined') {
-            const restaurantsSkip = await restaurantModel.find().lean().lean().skip(3).limit(3)
+            const restaurantsSkip = await restaurantModel.find().populate('tables').lean().lean().skip(3).limit(3)
             res.json(restaurantsSkip)
 
         } else if (typeof limit !== 'undefined') {
-            const restaurantsLimit = await restaurantModel.find().lean().limit(3)
+            const restaurantsLimit = await restaurantModel.find().poupulate('tables').lean().limit(3)
        
             res.json(restaurantsLimit)
 
         } else {
-            const restaurants = await restaurantModel.find().lean()
+            const restaurants = await restaurantModel.find().populate('tables').lean()
             
             res.json(restaurants)
         }
@@ -31,7 +32,7 @@ const getRestaurants = async (req, res) => {
 const getRestaurant = async (req, res) => {
     try {
         const idRestaurant = req.params.id
-        const restaurant = await restaurantModel.findById(idRestaurant).lean()
+        const restaurant = await restaurantModel.findById(idRestaurant).populate('tables').lean()
 
         res.json(restaurant)
     } catch (error) {

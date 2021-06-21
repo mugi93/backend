@@ -1,5 +1,6 @@
 const hotelModel = require("../../model/hotel")
 const expressValidator = require("express-validator");
+const Room =require("../../model/room")
 
 const getHotels = async (req, res) => {
     try {
@@ -20,7 +21,7 @@ const getHotels = async (req, res) => {
             res.json(hotels)
 
         } else {
-            const hotel = await hotelModel.find().populate("rooms").lean()
+            const hotel = await hotelModel.find({}).populate("rooms").lean()
             // console.log(hotel)
             res.json(hotel)
         }
@@ -40,7 +41,8 @@ const getHotels = async (req, res) => {
 const getHotel = async (req, res) => {
     try {
         const idHotel = req.params.id
-        const hotel = await hotelModel.findById(idHotel).populate('rooms').lean()
+        const hotel = await hotelModel.findById(idHotel).populate("rooms").lean()
+
 
         res.json(hotel)
     } catch (error) {
