@@ -27,7 +27,7 @@ app.use(express.json())
 app.use(debug)
 
 
-app.use(express.json())
+
 
 app.use("/hotels", hotelRoutes)
 

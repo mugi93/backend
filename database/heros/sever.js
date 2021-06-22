@@ -114,6 +114,7 @@ const port = 8001;
 app.get("/heroes", async (req, res) => {
     try {
         const superH = await Hero.find().exec()
+        console.log(superH)
         res.json(superH)
     } catch (error) {
         console.error("Error in GET /heroes", error)
