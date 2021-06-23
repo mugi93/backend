@@ -5,6 +5,10 @@ const valid =require("../validator/valid")
 
 router.post("/signup",valid, signUp)
 
-
+router.all("*", (req, res) => {
+    res.status(404).json({
+        errorMessage: "The route was not found"
+    })
+})
 
 module.exports = router
