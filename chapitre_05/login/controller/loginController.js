@@ -24,12 +24,12 @@ const login = async (req,res)=>{
         const password =req.body.password
         console.log(password)
         const users = await modelLogin.findOne({username:username})
-        console.log(users[0].password)
+        console.log(users.password)
 
-        const auth = await bcrypt.compareSync(passsword,users.passsword)
+        const auth = await bcrypt.compare(password,users.password)
         console.log(auth)
         if(auth){
-            res.json("ok")
+            res.json("")
 
         }else{
             res.json("raté")
