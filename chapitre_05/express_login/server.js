@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const cors = require('cors')
 const config =require ("./config")
 const loginroute=require("../express_login/route/loginroute")
+const userroute=require("./route/userroute")
 
 
 mongoose.connect(config.mongoURL, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
@@ -23,6 +24,8 @@ app.use(cors())
 app.use(express.json())
 
 app.use("/log",loginroute)
+app.use("/user",userroute)
+
 
 
 app.listen(port, () => {
