@@ -2,6 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const hotelRoutes = require("./routes/hotelRoute")
 const restaurantRoutes = require("./routes/restauRoute")
+const usersRoute=require("./routes/usersRoute")
 const cors = require("cors")
 mongoose.connect("mongodb://localhost:27017/trippy", (err) => {
     if (err) {
@@ -32,6 +33,7 @@ app.use(debug)
 app.use("/hotels", hotelRoutes)
 
 app.use("/restaurants", restaurantRoutes)
+app.use("/users",usersRoute)
 
 app.get("*", (req, res) => {
     res.json({
