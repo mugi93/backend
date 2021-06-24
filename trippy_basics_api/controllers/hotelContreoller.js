@@ -1,6 +1,6 @@
-const hotelModel = require("../../model/hotel")
+const hotelModel = require("../model/hotel")
 const expressValidator = require("express-validator");
-const Room =require("../../model/room")
+const Room =require("../model/room")
 
 const getHotels = async (req, res) => {
     try {
