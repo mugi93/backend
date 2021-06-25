@@ -20,9 +20,10 @@ const signUp = async (req, res) => {
             const lastname = req.body.lastname
             const email = req.body.email
             const password = bcryptjs.hashSync(req.body.password)
+            const role=req.body.role
 
 
-            const user = await usersModel.create({ firstname, lastname, email, password })
+            const user = await usersModel.create({ firstname, lastname, email, password,role })
 
             res.json({ message: "User was created!", user })
         }

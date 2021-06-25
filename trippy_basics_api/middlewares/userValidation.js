@@ -10,6 +10,7 @@ const userValidation = [
     expressValidator.body("lastname").exists(),
     
    expressValidator.body("password").exists().isLength(min = 8, max = 20),
+   expressValidator.body("role").exists()
 
 
 ]

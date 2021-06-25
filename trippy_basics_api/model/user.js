@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     firstname:String,
     lastname:String,
     password:String,
-    created: { type: Date, default: Date.now }
+    role: Number
+   
 })
 
 const modelUsers = mongoose.model("modelUser", userSchema)
